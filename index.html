@@ -33,31 +33,48 @@
   *{box-sizing:border-box}
   body{margin:0;overflow-x:hidden;background:var(--paper);color:var(--ink);
        font-family:sans-serif;-webkit-text-size-adjust:100%}
+  .is-hidden{display:none!important}
 
+  /* ---------- zámok ---------- */
+  .lock{position:fixed;inset:0;z-index:90;background:var(--head-bg);
+        display:flex;align-items:center;justify-content:center;padding:22px}
+  .lock-box{width:100%;max-width:330px;text-align:center}
+  .lock h2{font-family:"sans-serif-condensed",sans-serif;font-weight:700;font-size:28px;
+           letter-spacing:.07em;text-transform:uppercase;color:var(--head-fg);margin:0 0 6px}
+  .lock p{font-size:13px;color:var(--head-mut);margin:0 0 18px}
+  .lock input{width:100%;font-family:monospace;font-size:15px;padding:11px 12px;
+              border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.07);
+              color:var(--head-fg);border-radius:0;margin-bottom:10px}
+  .lock input:focus{outline:none;border-color:var(--head-fg)}
+  .lock button{width:100%;font-family:"sans-serif-condensed",sans-serif;font-weight:600;
+               font-size:16px;letter-spacing:.08em;text-transform:uppercase;
+               padding:11px;border:0;background:var(--head-fg);color:var(--head-bg);cursor:pointer}
+  .lock .err{color:#F07A6A;font-size:12.5px;min-height:18px;margin:10px 0 0}
+
+  /* ---------- hlavička ---------- */
   .top{position:relative;overflow:hidden;background:var(--head-bg);
        color:var(--head-fg);padding:20px 16px 16px}
-  .top::before{
-    content:"";position:absolute;inset:-40px -10px auto -10px;height:120px;
+  .top::before{content:"";position:absolute;inset:-40px -10px auto -10px;height:120px;
     background:radial-gradient(circle at 14% 26%, rgba(255,255,255,.14) 1.6px, transparent 1.7px) 0 0/22px 19px;
     -webkit-mask-image:linear-gradient(to bottom,#000,transparent 78%);
-    mask-image:linear-gradient(to bottom,#000,transparent 78%);pointer-events:none;
-  }
-  .top-in{position:relative;max-width:1100px;margin:0 auto}
+    mask-image:linear-gradient(to bottom,#000,transparent 78%);pointer-events:none}
+  .top-in{position:relative;max-width:1140px;margin:0 auto}
   h1{font-family:"sans-serif-condensed",sans-serif;font-weight:700;font-size:34px;
      line-height:.95;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px}
   .sub{font-family:monospace;font-size:10.5px;letter-spacing:.13em;
        text-transform:uppercase;color:var(--head-mut);margin:0}
   .stats{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
   .stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);
-        padding:6px 10px 5px;flex:1 1 80px;min-width:0}
-  .stat b{display:block;font-family:monospace;font-size:17px;font-weight:600;line-height:1}
+        padding:6px 10px 5px;flex:1 1 80px;min-width:0;overflow:hidden}
+  .stat b{display:block;font-family:monospace;font-size:17px;font-weight:600;line-height:1.1}
   .stat span{display:block;font-size:9px;letter-spacing:.11em;text-transform:uppercase;
              color:var(--head-mut);margin-top:5px}
   .stat.w b{color:#F0A044}
   .stat.d b{color:#67C79E}
 
+  /* ---------- panel ---------- */
   .bar{background:var(--paper);border-bottom:1px solid var(--line);padding:9px 16px}
-  .bar-in{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+  .bar-in{max-width:1140px;margin:0 auto;display:flex;flex-wrap:wrap;gap:7px;align-items:center}
   .chips{display:flex;border:1px solid var(--line);background:var(--surface)}
   .chip{font-family:"sans-serif-condensed",sans-serif;font-weight:600;font-size:13.5px;
         letter-spacing:.06em;text-transform:uppercase;padding:8px 11px 6px;
@@ -73,18 +90,25 @@
   .stamp{font-family:monospace;font-size:10px;letter-spacing:.09em;text-transform:uppercase;
          color:var(--ink-3);margin-left:auto;white-space:nowrap}
 
-  .wrap{max-width:1100px;margin:0 auto;padding:14px 16px 60px}
+  .wrap{max-width:1140px;margin:0 auto;padding:14px 16px 60px}
 
-  .grid{display:grid;grid-template-columns:44px minmax(110px,1.2fr) 74px repeat(3,minmax(96px,1fr)) 128px}
+  /* ---------- tabuľka ---------- */
+  .grid{display:grid;
+        grid-template-columns:42px minmax(104px,1.15fr) 62px 88px repeat(3,minmax(92px,1fr)) 124px}
+  .head{display:contents}
   .head>div{font-family:"sans-serif-condensed",sans-serif;font-weight:600;font-size:12px;
             letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
             padding:0 8px 6px;border-bottom:2px solid var(--ink);align-self:end}
+  .row{display:contents}
   .cell{background:var(--surface);border-bottom:1px solid var(--line-2);
         padding:8px;display:flex;align-items:center;min-height:44px;min-width:0}
+  .cell>*{min-width:0;max-width:100%}
   .row:nth-child(even) .cell{background:var(--surface-2)}
   .num{font-family:monospace;font-size:12px;color:var(--ink-3)}
-  .ord{font-family:monospace;font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+  .ord{font-family:monospace;font-size:13.5px;font-weight:600;
+       overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .siz{font-family:"sans-serif-condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.04em}
+  .amt{font-family:monospace;font-size:13px;font-weight:600;width:100%;text-align:right}
   .dat{font-family:monospace;font-size:12.5px;color:var(--ink-2)}
   .dat.none{color:var(--ink-3)}
   .lab{display:none}
@@ -93,7 +117,7 @@
   .track{display:flex;gap:3px}
   .seg{width:20px;height:16px;display:grid;place-items:center;
        font-family:"sans-serif-condensed",sans-serif;font-weight:700;font-size:11px;
-       border:1px solid var(--line);color:var(--ink-3);background:transparent}
+       border:1px solid var(--line);color:var(--ink-3);background:transparent;font-style:normal}
   .seg.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .seg.on.fin{background:var(--done);border-color:var(--done);color:#fff}
   .slab{font-family:monospace;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
@@ -103,20 +127,22 @@
   .msg{background:var(--surface);border:1px dashed var(--line);padding:34px 18px;
        text-align:center;color:var(--ink-2);font-size:14px}
 
-  @media screen and (max-width:760px){
+  @media screen and (max-width:780px){
     .grid{display:block}
     .head{display:none}
     .row{display:grid;grid-template-columns:repeat(3,1fr);
          background:var(--surface);border:1px solid var(--line);margin-bottom:9px}
     .row:nth-child(even) .cell{background:transparent}
     .cell{background:transparent;border-bottom:1px solid var(--line-2);
-          flex-direction:column;align-items:stretch;gap:2px;padding:7px 9px}
+          flex-direction:column;align-items:stretch;gap:2px;padding:7px 9px;min-height:0}
     .lab{display:block;font-family:"sans-serif-condensed",sans-serif;font-weight:600;
          font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
     .c-num{grid-column:span 1}
     .c-num .lab{display:none}
     .c-ord{grid-column:span 2}
-    .c-siz{grid-column:span 3}
+    .c-siz{grid-column:span 1}
+    .c-amt{grid-column:span 2}
+    .amt{text-align:left}
     .c-d{grid-column:span 1}
     .c-st{grid-column:span 3;flex-direction:row;align-items:center;gap:9px}
     h1{font-size:28px}
@@ -125,48 +151,61 @@
 </head>
 <body>
 
-<header class="top">
-  <div class="top-in">
-    <h1>Zákazky</h1>
-    <p class="sub">Výroba · Striekanie · Odovzdanie</p>
-    <div class="stats">
-      <div class="stat"><b id="s-all">–</b><span>Celkom</span></div>
-      <div class="stat w"><b id="s-work">–</b><span>Rozrobené</span></div>
-      <div class="stat d"><b id="s-done">–</b><span>Odovzdané</span></div>
-    </div>
-  </div>
-</header>
-
-<div class="bar">
-  <div class="bar-in">
-    <div class="search"><input id="q" type="search" placeholder="Hľadať zákazku…" aria-label="Hľadať"></div>
-    <div class="chips" role="group" aria-label="Filter">
-      <button class="chip" data-f="all" aria-pressed="true">Všetky</button>
-      <button class="chip" data-f="work" aria-pressed="false">Rozrobené</button>
-      <button class="chip" data-f="done" aria-pressed="false">Odovzdané</button>
-    </div>
-    <button class="tbtn" id="theme" title="Svetlý / tmavý režim">☾</button>
-    <span class="stamp" id="stamp">Načítavam…</span>
+<div class="lock" id="lock">
+  <div class="lock-box">
+    <h2>Zákazky</h2>
+    <p>Zadaj heslo na zobrazenie prehľadu.</p>
+    <input type="password" id="pass" autocomplete="current-password" placeholder="heslo">
+    <button id="unlock">Odomknúť</button>
+    <p class="err" id="lockErr"></p>
   </div>
 </div>
 
-<main class="wrap">
-  <div class="grid" id="grid">
-    <div class="head" style="display:contents">
-      <div>Č.</div><div>Zákazka</div><div>Veľ.</div>
-      <div>Vyrobené</div><div>Nastriekané</div><div>Odovzdané</div><div>Stav</div>
+<div id="app" class="is-hidden">
+  <header class="top">
+    <div class="top-in">
+      <h1>Zákazky</h1>
+      <p class="sub">Výroba · Striekanie · Odovzdanie</p>
+      <div class="stats">
+        <div class="stat"><b id="s-all">0</b><span>Celkom</span></div>
+        <div class="stat w"><b id="s-work">0</b><span>Rozrobené</span></div>
+        <div class="stat d"><b id="s-done">0</b><span>Odovzdané</span></div>
+        <div class="stat"><b id="s-eur">0 €</b><span>Spolu</span></div>
+      </div>
     </div>
-    <div id="rows" style="display:contents"></div>
+  </header>
+
+  <div class="bar">
+    <div class="bar-in">
+      <div class="search"><input id="q" type="search" placeholder="Hľadať zákazku…" aria-label="Hľadať"></div>
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip" data-f="all" aria-pressed="true">Všetky</button>
+        <button class="chip" data-f="work" aria-pressed="false">Rozrobené</button>
+        <button class="chip" data-f="done" aria-pressed="false">Odovzdané</button>
+      </div>
+      <button class="tbtn" id="theme" title="Svetlý / tmavý režim">&#9790;</button>
+      <span class="stamp" id="stamp">Načítavam…</span>
+    </div>
   </div>
-  <div class="msg" id="msg">Načítavam zoznam…</div>
-</main>
+
+  <main class="wrap">
+    <div class="grid" id="grid">
+      <div class="head">
+        <div>Č.</div><div>Zákazka</div><div>Veľ.</div><div>Suma</div>
+        <div>Vyrobené</div><div>Nastriekané</div><div>Odovzdané</div><div>Stav</div>
+      </div>
+      <div id="rows" style="display:contents"></div>
+    </div>
+    <div class="msg is-hidden" id="msg"></div>
+  </main>
+</div>
 
 <script>
 (function(){
   var DATA = 'zakazky.json';
-  var orders = [], updated = '';
-  var filter = 'all', q = '';
-  var theme = 'auto';
+  var PASS_KEY = 'zakazky-pass';
+  var orders = [], pass = '';
+  var filter = 'all', q = '', theme = 'auto';
 
   var $ = function(id){ return document.getElementById(id); };
   var esc = function(s){
@@ -179,6 +218,10 @@
     var p = String(d).split('-');
     return p.length === 3 ? p[2] + '.' + p[1] + '.' + p[0] : String(d);
   };
+  function fmtEur(n){
+    n = Math.round(Number(n) || 0);
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00A0') + ' \u20AC';
+  }
 
   /* ---------- téma ---------- */
   function isDark(){
@@ -190,34 +233,49 @@
     var el = document.documentElement;
     if (theme === 'dark' || theme === 'light') el.setAttribute('data-theme', theme);
     else el.removeAttribute('data-theme');
-    $('theme').textContent = isDark() ? '☀' : '☾';
+    $('theme').innerHTML = isDark() ? '&#9728;' : '&#9790;';
   }
-  $('theme').onclick = function(){ theme = isDark() ? 'light' : 'dark'; applyTheme(); };
   applyTheme();
+
+  /* ---------- dešifrovanie ---------- */
+  function b64ToBuf(b64){
+    var bin = atob(b64), out = new Uint8Array(bin.length);
+    for (var i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function decrypt(payload, password){
+    var enc = new TextEncoder();
+    return crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey'])
+      .then(function(base){
+        return crypto.subtle.deriveKey(
+          { name:'PBKDF2', salt:b64ToBuf(payload.salt), iterations:150000, hash:'SHA-256' },
+          base, { name:'AES-GCM', length:256 }, false, ['decrypt']);
+      })
+      .then(function(key){
+        return crypto.subtle.decrypt(
+          { name:'AES-GCM', iv:b64ToBuf(payload.iv) }, key, b64ToBuf(payload.ct));
+      })
+      .then(function(buf){ return JSON.parse(new TextDecoder().decode(buf)); });
+  }
 
   /* ---------- stav ---------- */
   function stage(o){
-    if (o.od) return { key:'done', text:'Odovzdané', n:3 };
-    if (o.st) return { key:'work', text:'Nastriekané', n:2 };
-    if (o.vy) return { key:'work', text:'Vo výrobe', n:1 };
-    return { key:'work', text:'Nová', n:0 };
+    if (o.od) return { key:'done', text:'Odovzdané' };
+    if (o.st) return { key:'work', text:'Nastriekané' };
+    if (o.vy) return { key:'work', text:'Vo výrobe' };
+    return { key:'work', text:'Nová' };
   }
-
   function trackHTML(o){
-    var s = stage(o);
-    var keys = ['V','S','O'], on = [!!o.vy, !!o.st, !!o.od];
-    var h = '<div class="track">';
+    var s = stage(o), keys = ['V','S','O'], on = [!!o.vy, !!o.st, !!o.od], h = '<div class="track">';
     for (var i=0;i<3;i++){
-      h += '<i class="seg' + (on[i] ? ' on' : '') + (on[i] && i === 2 ? ' fin' : '') +
-           '" style="font-style:normal">' + keys[i] + '</i>';
+      h += '<i class="seg' + (on[i] ? ' on' : '') + (on[i] && i === 2 ? ' fin' : '') + '">' + keys[i] + '</i>';
     }
     return h + '</div><span class="slab ' + s.key + '">' + s.text + '</span>';
   }
 
   /* ---------- vykreslenie ---------- */
   function visible(){
-    var out = [];
-    var needle = q.trim().toLowerCase();
+    var out = [], needle = q.trim().toLowerCase();
     for (var i=0;i<orders.length;i++){
       var o = orders[i];
       if (needle && String(o.c || '').toLowerCase().indexOf(needle) === -1) continue;
@@ -228,11 +286,9 @@
   }
 
   function render(){
-    var list = visible();
-    var h = '';
+    var list = visible(), h = '';
     for (var k=0;k<list.length;k++){
-      var o = list[k].o;
-      var seq = String(list[k].i + 1);
+      var o = list[k].o, seq = String(list[k].i + 1);
       if (seq.length < 2) seq = '0' + seq;
       h += '<div class="row">' +
         '<div class="cell c-num"><span class="num">' + seq + '</span></div>' +
@@ -240,6 +296,8 @@
           '<span class="ord">' + esc(o.c || '—') + '</span></div>' +
         '<div class="cell c-siz"><span class="lab">Veľkosť</span>' +
           '<span class="siz">' + esc(o.v || '—') + '</span></div>' +
+        '<div class="cell c-amt"><span class="lab">Suma</span>' +
+          '<span class="amt">' + (o.s ? fmtEur(o.s) : '—') + '</span></div>' +
         '<div class="cell c-d"><span class="lab">Vyrobené</span>' +
           '<span class="dat' + (o.vy ? '' : ' none') + '">' + dm(o.vy) + '</span></div>' +
         '<div class="cell c-d"><span class="lab">Nastriekané</span>' +
@@ -252,45 +310,63 @@
     $('rows').innerHTML = h;
 
     var none = list.length === 0;
-    $('grid').style.display = none ? 'none' : 'grid';
-    $('msg').style.display = none ? 'block' : 'none';
+    $('grid').classList.toggle('is-hidden', none);
+    $('msg').classList.toggle('is-hidden', !none);
     if (none){
       $('msg').textContent = orders.length
         ? 'Nič nesedí — skús iný filter alebo iné číslo zákazky.'
         : 'Zoznam je zatiaľ prázdny.';
     }
 
-    var all = orders.length, work = 0, done = 0;
-    for (var i=0;i<all;i++){ if (stage(orders[i]).key === 'done') done++; else work++; }
+    var all = orders.length, work = 0, done = 0, eur = 0;
+    for (var i=0;i<all;i++){
+      if (stage(orders[i]).key === 'done') done++; else work++;
+      eur += Number(orders[i].s) || 0;
+    }
     $('s-all').textContent = all;
     $('s-work').textContent = work;
     $('s-done').textContent = done;
+    $('s-eur').textContent = fmtEur(eur);
   }
 
-  /* ---------- načítanie dát ---------- */
-  function fetchData(quiet){
-    fetch(DATA + '?t=' + Date.now(), { cache: 'no-store' })
-      .then(function(r){
-        if (!r.ok) throw new Error('http ' + r.status);
-        return r.json();
-      })
-      .then(function(d){
-        orders = Array.isArray(d) ? d : (d.orders || []);
-        updated = d.updated || '';
-        $('stamp').textContent = updated ? 'Údaje k ' + updated : 'Načítané';
-        render();
-      })
-      .catch(function(){
-        $('stamp').textContent = 'Nedostupné';
-        if (!orders.length && !quiet){
-          $('grid').style.display = 'none';
-          $('msg').style.display = 'block';
-          $('msg').textContent = 'Zoznam sa nepodarilo načítať. Skús obnoviť stránku.';
-        }
+  function useData(d){
+    orders = Array.isArray(d) ? d : (d.orders || []);
+    $('stamp').textContent = d.updated ? 'Údaje k ' + d.updated : 'Načítané';
+    $('lock').classList.add('is-hidden');
+    $('app').classList.remove('is-hidden');
+    render();
+  }
+
+  function fetchData(){
+    return fetch(DATA + '?t=' + Date.now(), { cache:'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('http'); return r.json(); })
+      .then(function(payload){
+        if (!payload.enc) { useData(payload); return; }
+        if (!pass) throw new Error('nopass');
+        return decrypt(payload, pass).then(useData);
       });
   }
 
+  $('unlock').onclick = function(){
+    var p = $('pass').value;
+    if (!p) return;
+    pass = p;
+    $('lockErr').textContent = 'Overujem…';
+    fetchData().then(function(){
+      try { localStorage.setItem(PASS_KEY, p); } catch(e){}
+      $('lockErr').textContent = '';
+    }).catch(function(){
+      pass = '';
+      $('lockErr').textContent = 'Nesprávne heslo alebo súbor sa nedá načítať.';
+    });
+  };
+  $('pass').addEventListener('keydown', function(e){
+    if (e.key === 'Enter'){ e.preventDefault(); $('unlock').click(); }
+  });
+
+  $('theme').onclick = function(){ theme = isDark() ? 'light' : 'dark'; applyTheme(); };
   $('q').addEventListener('input', function(e){ q = e.target.value; render(); });
+
   var chips = document.querySelectorAll('.chip');
   for (var c=0;c<chips.length;c++){
     chips[c].addEventListener('click', function(e){
@@ -302,10 +378,13 @@
     });
   }
 
-  fetchData();
-  setInterval(function(){ fetchData(true); }, 120000);
+  try { pass = localStorage.getItem(PASS_KEY) || ''; } catch(e){ pass = ''; }
+  fetchData().catch(function(){ pass = ''; $('pass').focus(); });
+
+  function refresh(){ if (!$('app').classList.contains('is-hidden')) fetchData().catch(function(){}); }
+  setInterval(refresh, 120000);
   document.addEventListener('visibilitychange', function(){
-    if (document.visibilityState === 'visible') fetchData(true);
+    if (document.visibilityState === 'visible') refresh();
   });
 })();
 </script>
