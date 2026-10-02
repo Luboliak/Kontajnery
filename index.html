@@ -94,7 +94,7 @@
 
   /* ---------- tabuľka ---------- */
   .grid{display:grid;
-        grid-template-columns:42px minmax(104px,1.15fr) 62px 88px repeat(3,minmax(92px,1fr)) 124px}
+        grid-template-columns:40px minmax(96px,1.1fr) 56px 84px repeat(4,minmax(86px,1fr)) 118px}
   .head{display:contents}
   .head>div{font-family:"sans-serif-condensed",sans-serif;font-weight:600;font-size:12px;
             letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
@@ -121,8 +121,9 @@
   .seg.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
   .seg.on.fin{background:var(--done);border-color:var(--done);color:#fff}
   .slab{font-family:monospace;font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3)}
-  .slab.work{color:var(--work);font-weight:600}
-  .slab.done{color:var(--done);font-weight:600}
+  .slab.work{color:var(--ink-2)}
+  .slab.wait{color:var(--work);font-weight:600}
+  .slab.paid{color:var(--done);font-weight:600}
 
   .msg{background:var(--surface);border:1px dashed var(--line);padding:34px 18px;
        text-align:center;color:var(--ink-2);font-size:14px}
@@ -144,6 +145,7 @@
     .c-amt{grid-column:span 2}
     .amt{text-align:left}
     .c-d{grid-column:span 1}
+    .c-vp{grid-column:span 3}
     .c-st{grid-column:span 3;flex-direction:row;align-items:center;gap:9px}
     h1{font-size:28px}
   }
@@ -169,7 +171,7 @@
       <div class="stats">
         <div class="stat"><b id="s-all">0</b><span>Celkom</span></div>
         <div class="stat w"><b id="s-work">0</b><span>Rozrobené</span></div>
-        <div class="stat d"><b id="s-done">0</b><span>Odovzdané</span></div>
+        <div class="stat d"><b id="s-done">0</b><span>Vyplatené</span></div>
         <div class="stat w"><b id="s-eur">0 €</b><span>Nevyplatené</span></div>
       </div>
     </div>
@@ -181,7 +183,8 @@
       <div class="chips" role="group" aria-label="Filter">
         <button class="chip" data-f="all" aria-pressed="true">Všetky</button>
         <button class="chip" data-f="work" aria-pressed="false">Rozrobené</button>
-        <button class="chip" data-f="done" aria-pressed="false">Odovzdané</button>
+        <button class="chip" data-f="wait" aria-pressed="false">Čaká platbu</button>
+        <button class="chip" data-f="paid" aria-pressed="false">Vyplatené</button>
       </div>
       <button class="tbtn" id="theme" title="Svetlý / tmavý režim">&#9790;</button>
       <span class="stamp" id="stamp">Načítavam…</span>
@@ -192,7 +195,8 @@
     <div class="grid" id="grid">
       <div class="head">
         <div>Č.</div><div>Zákazka</div><div>Veľ.</div><div>Nevypl.</div>
-        <div>Vyrobené</div><div>Nastriekané</div><div>Odovzdané</div><div>Stav</div>
+        <div>Vyrobené</div><div>Nastriekané</div><div>Odovzdané</div>
+        <div>Vyplatené</div><div>Stav</div>
       </div>
       <div id="rows" style="display:contents"></div>
     </div>
@@ -260,15 +264,18 @@
 
   /* ---------- stav ---------- */
   function stage(o){
-    if (o.od) return { key:'done', text:'Odovzdané' };
+    if (o.vp) return { key:'paid', text:'Vyplatené' };
+    if (o.od) return { key:'wait', text:'Čaká platbu' };
     if (o.st) return { key:'work', text:'Nastriekané' };
     if (o.vy) return { key:'work', text:'Vo výrobe' };
     return { key:'work', text:'Nová' };
   }
   function trackHTML(o){
-    var s = stage(o), keys = ['V','S','O'], on = [!!o.vy, !!o.st, !!o.od], h = '<div class="track">';
-    for (var i=0;i<3;i++){
-      h += '<i class="seg' + (on[i] ? ' on' : '') + (on[i] && i === 2 ? ' fin' : '') + '">' + keys[i] + '</i>';
+    var s = stage(o), keys = ['V','S','O','P'];
+    var on = [!!o.vy, !!o.st, !!o.od, !!o.vp], h = '<div class="track">';
+    for (var i=0;i<4;i++){
+      h += '<i class="seg' + (on[i] ? ' on' : '') + (on[i] && i === 3 ? ' fin' : '') +
+           '">' + keys[i] + '</i>';
     }
     return h + '</div><span class="slab ' + s.key + '">' + s.text + '</span>';
   }
@@ -304,6 +311,8 @@
           '<span class="dat' + (o.st ? '' : ' none') + '">' + dm(o.st) + '</span></div>' +
         '<div class="cell c-d"><span class="lab">Odovzdané</span>' +
           '<span class="dat' + (o.od ? '' : ' none') + '">' + dm(o.od) + '</span></div>' +
+        '<div class="cell c-d c-vp"><span class="lab">Vyplatené</span>' +
+          '<span class="dat' + (o.vp ? '' : ' none') + '">' + dm(o.vp) + '</span></div>' +
         '<div class="cell c-st stat-cell">' + trackHTML(o) + '</div>' +
       '</div>';
     }
@@ -320,7 +329,8 @@
 
     var all = orders.length, work = 0, done = 0, eur = 0;
     for (var i=0;i<all;i++){
-      if (stage(orders[i]).key === 'done') done++; else work++;
+      var k = stage(orders[i]).key;
+      if (k === 'paid') done++; else work++;
       eur += Number(orders[i].s) || 0;
     }
     $('s-all').textContent = all;
