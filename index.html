@@ -170,7 +170,7 @@
         <div class="stat"><b id="s-all">0</b><span>Celkom</span></div>
         <div class="stat w"><b id="s-work">0</b><span>Rozrobené</span></div>
         <div class="stat d"><b id="s-done">0</b><span>Odovzdané</span></div>
-        <div class="stat"><b id="s-eur">0 €</b><span>Spolu</span></div>
+        <div class="stat w"><b id="s-eur">0 €</b><span>Nevyplatené</span></div>
       </div>
     </div>
   </header>
@@ -191,7 +191,7 @@
   <main class="wrap">
     <div class="grid" id="grid">
       <div class="head">
-        <div>Č.</div><div>Zákazka</div><div>Veľ.</div><div>Suma</div>
+        <div>Č.</div><div>Zákazka</div><div>Veľ.</div><div>Nevypl.</div>
         <div>Vyrobené</div><div>Nastriekané</div><div>Odovzdané</div><div>Stav</div>
       </div>
       <div id="rows" style="display:contents"></div>
@@ -296,7 +296,7 @@
           '<span class="ord">' + esc(o.c || '—') + '</span></div>' +
         '<div class="cell c-siz"><span class="lab">Veľkosť</span>' +
           '<span class="siz">' + esc(o.v || '—') + '</span></div>' +
-        '<div class="cell c-amt"><span class="lab">Suma</span>' +
+        '<div class="cell c-amt"><span class="lab">Nevyplatené</span>' +
           '<span class="amt">' + (o.s ? fmtEur(o.s) : '—') + '</span></div>' +
         '<div class="cell c-d"><span class="lab">Vyrobené</span>' +
           '<span class="dat' + (o.vy ? '' : ' none') + '">' + dm(o.vy) + '</span></div>' +
