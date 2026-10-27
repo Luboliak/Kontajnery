@@ -206,7 +206,13 @@
 
 <script>
 (function(){
-  var DATA = 'zakazky.json';
+  /* ====== SEM DOPLŇ ADRESU CLOUDFLARE WORKERA ======
+     Napr.: var WORKER_URL = 'https://zakazky.v8kjgs4tmc.workers.dev';
+     Ak necháš prázdne, stránka číta súbor zakazky.json vedľa seba. */
+  var WORKER_URL = '';
+  /* ================================================= */
+
+  var DATA = WORKER_URL ? WORKER_URL.replace(/\/+$/,'') : 'zakazky.json';
   var PASS_KEY = 'zakazky-pass';
   var orders = [], pass = '';
   var filter = 'all', q = '', theme = 'auto';
